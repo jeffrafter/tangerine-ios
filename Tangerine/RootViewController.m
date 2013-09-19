@@ -7,11 +7,13 @@
 //
 
 #import "RootViewController.h"
+#import "KeychainItemWrapper.h"
 #import <CouchbaseLite/CouchbaseLite.h>
 #import <CouchbaseLiteListener/CBLListener.h>
 
-@interface RootViewController ()
+@interface RootViewController () <UIWebViewDelegate>
 
+@property (nonatomic, retain) KeychainItemWrapper *keychain;
 @property (nonatomic, strong) CBLListener *listener;
 @property (nonatomic, strong) UIWebView *webView;
 
@@ -25,6 +27,9 @@
 
     CBLManager* manager = [CBLManager sharedInstance];
     self.listener = [[CBLListener alloc] initWithManager: manager port: 8088];
+    self.listener.authSecret = [self getAuthSecret];
+    self.listener.passwords = @{@"admin": @"password"};
+    self.listener.requiresAuth = NO;
     self.listener.readOnly = NO;
     NSError* error;
     if ([self.listener start:&error])
@@ -36,7 +41,9 @@
         NSLog(@"%@", manager.internalURL);
 
         self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        self.webView.delegate = self;
         [self.view addSubview:self.webView];
+        
 
         UIButton *button=[UIButton buttonWithType:UIButtonTypeRoundedRect];
         button.frame= CGRectMake(15, 15, 100, 40);
@@ -66,6 +73,33 @@
 {
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://127.0.0.1:8088/tangerine/_design/tangerine/index.html"]]];
     ((UIButton *)sender).hidden = YES;
+}
+
+/** The authSecret can be stored anywhere (including directly in the code) but if you want to generate a per device
+ secret then it is helpful to store that in the keychain for later reuse */
+- (NSString *)getAuthSecret
+{
+    // Setup the keychain
+    self.keychain = [[KeychainItemWrapper alloc] initWithIdentifier:@"com.tangerine" accessGroup:nil];
+    [self.keychain setObject:(__bridge id)(kSecAttrAccessibleWhenUnlocked) forKey:(__bridge id)(kSecAttrAccessible)];
+    
+    // Get the secret
+    NSString *authSecret = [self.keychain objectForKey:(__bridge id)kSecValueData];
+    
+    // If there is no secret, create one and set it in the keychain
+    if (!authSecret || [authSecret isEqualToString:@""])
+    {
+        // TODO: Do something way more fancy here
+        authSecret = @"7801cb63b2bf0cd09ce7d313a34f7f9d";
+
+        [self.keychain setObject:authSecret forKey:(__bridge id)kSecValueData];
+    }
+    
+    return authSecret;
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
 }
 
 @end

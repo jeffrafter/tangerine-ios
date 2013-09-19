@@ -31,6 +31,7 @@
 		544B3F4F17E178AD000A2C52 /* libCBLJSViewCompiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC77D17C9484D005D5B29 /* libCBLJSViewCompiler.a */; };
 		54800E6117C9741D003CDFFD /* libCouchbaseLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC76D17C9484D005D5B29 /* libCouchbaseLite.a */; };
 		54800E6217C9741D003CDFFD /* libCouchbaseLiteListener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC77917C9484D005D5B29 /* libCouchbaseLiteListener.a */; };
+		54CA161317E774B00055E142 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 54CA161217E774B00055E142 /* KeychainItemWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,6 +185,8 @@
 		54143AF31791DD140006365A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		54143AF51791DD210006365A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		544B3F4D17E178A7000A2C52 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		54CA161117E774B00055E142 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
+		54CA161217E774B00055E142 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		54ECC75817C9484D005D5B29 /* CouchbaseLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CouchbaseLite.xcodeproj; path = "couchbase-lite-ios/CouchbaseLite.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,6 +268,8 @@
 				54143ABD1791DB2E0006365A /* AppDelegate.m */,
 				54143ACB1791DB2E0006365A /* RootViewController.h */,
 				54143ACC1791DB2E0006365A /* RootViewController.m */,
+				54CA161117E774B00055E142 /* KeychainItemWrapper.h */,
+				54CA161217E774B00055E142 /* KeychainItemWrapper.m */,
 				54143AB41791DB2E0006365A /* Supporting Files */,
 			);
 			path = Tangerine;
@@ -521,6 +526,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54CA161317E774B00055E142 /* KeychainItemWrapper.m in Sources */,
 				54143ABA1791DB2E0006365A /* main.m in Sources */,
 				54143ABE1791DB2E0006365A /* AppDelegate.m in Sources */,
 				54143ACD1791DB2E0006365A /* RootViewController.m in Sources */,
@@ -659,6 +665,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tangerine/Tangerine-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Tangerine/Tangerine-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -678,6 +685,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tangerine/Tangerine-Prefix.pch";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Tangerine/Tangerine-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
