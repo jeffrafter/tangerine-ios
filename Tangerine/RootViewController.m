@@ -19,14 +19,18 @@
 
 @end
 
-@implementation RootViewController
+@implementation RootViewController {
+    BOOL _appLoaded;
+    BOOL _databaseLoaded;
+    BOOL _viewLoaded;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
     CBLManager* manager = [CBLManager sharedInstance];
-    self.listener = [[CBLListener alloc] initWithManager: manager port: 8088];
+    self.listener = [[CBLListener alloc] initWithManager: manager port: 0];
     self.listener.authSecret = [self getAuthSecret];
     self.listener.passwords = @{@"admin": @"password"};
     self.listener.requiresAuth = NO;
@@ -43,14 +47,14 @@
         self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         self.webView.delegate = self;
         [self.view addSubview:self.webView];
-        
-
-        UIButton *button=[UIButton buttonWithType:UIButtonTypeRoundedRect];
-        button.frame= CGRectMake(15, 15, 100, 40);
-        [button setTitle:@"Load" forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:button];
     }
+}
+
+- (void)databaseDidLoad
+{
+    NSLog(@"Database loaded");
+    _databaseLoaded = YES;
+    [self loadApp];
 }
 
 - (void)viewDidLayoutSubviews
@@ -61,6 +65,10 @@
     webFrame.origin.y += 20;
     webFrame.size.height -= 20;
     self.webView.frame = webFrame;
+    
+    NSLog(@"View loaded");
+    _viewLoaded = YES;
+    [self loadApp];
 }
 
 - (void)didReceiveMemoryWarning
@@ -69,10 +77,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)buttonClicked:(id)sender
+- (void)loadApp
 {
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://127.0.0.1:8088/tangerine/_design/tangerine/index.html"]]];
-    ((UIButton *)sender).hidden = YES;
+    if (_appLoaded || !_databaseLoaded || !_viewLoaded) return;
+    _appLoaded = YES;
+    
+    [NSTimer scheduledTimerWithTimeInterval:2
+                                     target:self
+                                   selector:@selector(loadRequest)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)loadRequest
+{
+    NSString *domain = @"http://127.0.0.1";
+    NSString *path = @"/tangerine/_design/tangerine/index.html";
+    NSString *url = [NSString stringWithFormat:@"%@:%i%@", domain, self.listener.port, path];
+    NSLog(@"Listening on %@", url);
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
 }
 
 /** The authSecret can be stored anywhere (including directly in the code) but if you want to generate a per device

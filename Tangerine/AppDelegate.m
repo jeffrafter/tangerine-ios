@@ -17,6 +17,7 @@
 
 @property (nonatomic) CBLReplication *pull;
 @property (nonatomic) CBLReplication *push;
+@property (nonatomic) RootViewController *rvc;
 
 @end
 
@@ -32,7 +33,12 @@
 
     [CBLView setCompiler: [[CBLJSViewCompiler alloc] init]];
 
-    NSURL *db = [NSURL URLWithString:@"http://localhost:5984/tangerine"];
+    self.rvc = [[RootViewController alloc] init];
+    [[self window] setRootViewController:self.rvc];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    NSURL *db = [NSURL URLWithString:@"http://admin:password@localhost:5984/tangerine"];
     NSArray* repls = [self.database replicateWithURL: db exclusively: YES];
     self.pull = [repls objectAtIndex: 0];
     self.push = [repls objectAtIndex: 1];
@@ -40,13 +46,9 @@
     [self.pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
     [self.push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
 
-    RootViewController *vc = [[RootViewController alloc] init];
-
-    [[self window] setRootViewController:vc];
-
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-
+    // For some reason the observe methods are not being called, so do this manually
+    [self syncComplete];
+    
     return YES;
 }
 
@@ -76,8 +78,14 @@
             NSLog(@"Progress: %f", (completed / (float)total));
         } else {
             NSLog(@"Done");
+            [self syncComplete];
         }
     }
+}
+
+- (void)syncComplete
+{
+    [self.rvc databaseDidLoad];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
