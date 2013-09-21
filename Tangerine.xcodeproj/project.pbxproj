@@ -10,7 +10,6 @@
 		54143AAE1791DB2E0006365A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54143AAD1791DB2E0006365A /* UIKit.framework */; };
 		54143AB01791DB2E0006365A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54143AAF1791DB2E0006365A /* Foundation.framework */; };
 		54143AB21791DB2E0006365A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54143AB11791DB2E0006365A /* CoreGraphics.framework */; };
-		54143AB81791DB2E0006365A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 54143AB61791DB2E0006365A /* InfoPlist.strings */; };
 		54143ABA1791DB2E0006365A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 54143AB91791DB2E0006365A /* main.m */; };
 		54143ABE1791DB2E0006365A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 54143ABD1791DB2E0006365A /* AppDelegate.m */; };
 		54143AC01791DB2E0006365A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 54143ABF1791DB2E0006365A /* Default.png */; };
@@ -378,6 +377,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Jeff Rafter";
+				TargetAttributes = {
+					54143AA91791DB2E0006365A = {
+						DevelopmentTeam = B42KF28245;
+					};
+				};
 			};
 			buildConfigurationList = 54143AA51791DB2E0006365A /* Build configuration list for PBXProject "Tangerine" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -488,7 +492,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				54143AB81791DB2E0006365A /* InfoPlist.strings in Resources */,
 				54143AC01791DB2E0006365A /* Default.png in Resources */,
 				54143AC21791DB2E0006365A /* Default@2x.png in Resources */,
 				54143AC41791DB2E0006365A /* Default-568h@2x.png in Resources */,
@@ -659,6 +662,8 @@
 		54143AE61791DB2E0006365A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jeff Rafter (292P52J483)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -671,7 +676,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E9C6F511-9786-4039-9BE4-2F9EB99265C4";
+				PROVISIONING_PROFILE = "197C9FBF-7BF2-41FC-8AE2-84D32D371D2B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -679,6 +684,8 @@
 		54143AE71791DB2E0006365A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Jeffrey Rafter (B42KF28245)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -690,7 +697,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				"OTHER_LDFLAGS[arch=*]" = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E9C6F511-9786-4039-9BE4-2F9EB99265C4";
+				PROVISIONING_PROFILE = "197C9FBF-7BF2-41FC-8AE2-84D32D371D2B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

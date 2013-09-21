@@ -82,11 +82,23 @@
     if (_appLoaded || !_databaseLoaded || !_viewLoaded) return;
     _appLoaded = YES;
     
-    [NSTimer scheduledTimerWithTimeInterval:2
+/*    [NSTimer scheduledTimerWithTimeInterval:5
                                      target:self
                                    selector:@selector(loadRequest)
                                    userInfo:nil
-                                    repeats:NO];
+                                    repeats:NO]; */
+    
+    UIButton *button=[UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame= CGRectMake(15, 15, 100, 40);
+    [button setTitle:@"Load" forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
+}
+
+- (IBAction)buttonClicked:(id)sender
+{
+    [self loadRequest];
+    ((UIButton *)sender).hidden = YES;
 }
 
 - (void)loadRequest

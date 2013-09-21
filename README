@@ -4,3 +4,8 @@ git submodule update
 cd couchbase-lite-ios
 git submodule init
 git submodule update
+
+
+If you get a 404 when loading the app on the device it might be because you have not configured your
+local sync database to be accessible on 0.0.0.0 (in the default.ini you have 127.0.0.1 configured).
+

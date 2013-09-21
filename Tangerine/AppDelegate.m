@@ -12,6 +12,7 @@
 
 #import "CBLJSViewCompiler.h"
 
+#define noreplicate 1
 
 @interface AppDelegate()
 
@@ -37,15 +38,17 @@
     [[self window] setRootViewController:self.rvc];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    NSURL *db = [NSURL URLWithString:@"http://admin:password@localhost:5984/tangerine"];
+
+#ifdef replicate
+    NSURL *db = [NSURL URLWithString:@"http://admin:password@192.168.0.14:5984/tangerine"];
     NSArray* repls = [self.database replicateWithURL: db exclusively: YES];
     self.pull = [repls objectAtIndex: 0];
     self.push = [repls objectAtIndex: 1];
 
     [self.pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
     [self.push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
-
+#endif
+    
     // For some reason the observe methods are not being called, so do this manually
     [self syncComplete];
     
