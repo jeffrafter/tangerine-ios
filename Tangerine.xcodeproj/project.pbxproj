@@ -28,6 +28,8 @@
 		54143AF61791DD210006365A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 54143AF51791DD210006365A /* libz.dylib */; };
 		544B3F4E17E178A7000A2C52 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 544B3F4D17E178A7000A2C52 /* JavaScriptCore.framework */; };
 		544B3F4F17E178AD000A2C52 /* libCBLJSViewCompiler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC77D17C9484D005D5B29 /* libCBLJSViewCompiler.a */; };
+		5452E2F017F4292B00BCBC7E /* tangerine attachments in Resources */ = {isa = PBXBuildFile; fileRef = 5452E2EE17F4292B00BCBC7E /* tangerine attachments */; };
+		5452E2F117F4292B00BCBC7E /* tangerine.cblite in Resources */ = {isa = PBXBuildFile; fileRef = 5452E2EF17F4292B00BCBC7E /* tangerine.cblite */; };
 		54800E6117C9741D003CDFFD /* libCouchbaseLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC76D17C9484D005D5B29 /* libCouchbaseLite.a */; };
 		54800E6217C9741D003CDFFD /* libCouchbaseLiteListener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54ECC77917C9484D005D5B29 /* libCouchbaseLiteListener.a */; };
 		54CA161317E774B00055E142 /* KeychainItemWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 54CA161217E774B00055E142 /* KeychainItemWrapper.m */; };
@@ -184,6 +186,8 @@
 		54143AF31791DD140006365A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		54143AF51791DD210006365A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		544B3F4D17E178A7000A2C52 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		5452E2EE17F4292B00BCBC7E /* tangerine attachments */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "tangerine attachments"; sourceTree = "<group>"; };
+		5452E2EF17F4292B00BCBC7E /* tangerine.cblite */ = {isa = PBXFileReference; lastKnownFileType = file; path = tangerine.cblite; sourceTree = "<group>"; };
 		54CA161117E774B00055E142 /* KeychainItemWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainItemWrapper.h; sourceTree = "<group>"; };
 		54CA161217E774B00055E142 /* KeychainItemWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainItemWrapper.m; sourceTree = "<group>"; };
 		54ECC75817C9484D005D5B29 /* CouchbaseLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CouchbaseLite.xcodeproj; path = "couchbase-lite-ios/CouchbaseLite.xcodeproj"; sourceTree = "<group>"; };
@@ -277,6 +281,8 @@
 		54143AB41791DB2E0006365A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5452E2EE17F4292B00BCBC7E /* tangerine attachments */,
+				5452E2EF17F4292B00BCBC7E /* tangerine.cblite */,
 				54143AB51791DB2E0006365A /* Tangerine-Info.plist */,
 				54143AB61791DB2E0006365A /* InfoPlist.strings */,
 				54143AB91791DB2E0006365A /* main.m */,
@@ -492,8 +498,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5452E2F117F4292B00BCBC7E /* tangerine.cblite in Resources */,
 				54143AC01791DB2E0006365A /* Default.png in Resources */,
 				54143AC21791DB2E0006365A /* Default@2x.png in Resources */,
+				5452E2F017F4292B00BCBC7E /* tangerine attachments in Resources */,
 				54143AC41791DB2E0006365A /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
