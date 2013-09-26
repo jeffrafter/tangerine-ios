@@ -1,9 +1,11 @@
-Welcome to tangerine-ios based on Couchbase lite
-------------------------------------------------
+Tangerine for iOS
+-----------------
+
+Welcome to tangerine-ios based on Couchbase-lite
 
 This project works slightly different than most couchbase-lite apps as the couchbase-lite
 project is included as a subproject. Because of this you need to deal with multiple
-levels of submodules. This also relies on several forks which I am trying to keep up to date
+levels of submodules. These submodules relies on several forks.
 
 Clone this repo:
 
@@ -34,9 +36,9 @@ All you should see is a white screen with a Start button. If you click that now,
 see a 404 and then need to restart the app. At this point you'll want to setup the
 couchapp. There are three strategies for this:
 
-1) Replicate from a local or remote couchdb (in AppDelegate change #define noreplicate to replicate)
-2) Load from a bundled cblite (in AppDelegate change #define nobundled to bundled)
-3) couchapp push to the running server
+#) Replicate from a local or remote couchdb (in AppDelegate change #define noreplicate to replicate)
+#) Load from a bundled cblite (in AppDelegate change #define nobundled to bundled)
+#) couchapp push to the running server
 
 We'll try the couchapp push. Change to the Tangerine-community/app directory. You'll need to
 create a .couchapprc file:
