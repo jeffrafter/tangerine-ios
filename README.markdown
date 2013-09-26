@@ -112,3 +112,26 @@ Admin).
 Turn replication off in AppDelegate.m
 
     #define noreplicate 1
+
+# bundled
+
+In order to use the bundled database you need to checkout the bundled branch.
+
+On your simulator, make sure you have exited the app (Shift+Cmd+H is the Home Button), and delete it (click and hold
+the Tangerine icon until you see the (x) and delete it.
+
+In AppDelegate.m change the #define at the top:
+
+    #define bundled 1
+
+This makes it so that the app will copy the bundled database on load. Run the app. The copy should be very fast.
+Once the logs show that it is loaded, click the Start button. You should see the login screen and should be able to
+log in using admin/password (note: the user name is case sensitive and the username box tries to autocapitalize
+Admin).
+
+Now that the database exists, when you open the app it will not re-bundle. However you can turn bundling off
+in AppDelegate.m
+
+    #define nobundled 1
+
+

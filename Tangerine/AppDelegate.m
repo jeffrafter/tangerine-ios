@@ -81,6 +81,8 @@
 {
 #ifdef bundled
     if (!self.database) {
+        CBLManager* server = [CBLManager sharedInstance];
+        NSError* error;
         NSString* bundledDbPath = [[NSBundle mainBundle] pathForResource: @"tangerine" ofType: @"cblite"];
         NSString* bundledAttPath = [[NSBundle mainBundle] pathForResource: @"tangerine attachments" ofType: @""];
         
