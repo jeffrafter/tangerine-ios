@@ -98,6 +98,11 @@
 #endif
     
 #ifdef replicate
+    if (!self.database) {
+        CBLManager* server = [CBLManager sharedInstance];
+        NSError* error;
+        self.database = [server createDatabaseNamed: @"tangerine" error: &error];
+    }
     NSURL *db = [NSURL URLWithString:@"http://admin:password@localhost:5984/tangerine"];
     NSArray* repls = [self.database replicateWithURL: db exclusively: YES];
     self.pull = [repls objectAtIndex: 0];

@@ -40,7 +40,9 @@ couchapp. There are three strategies for this:
 2. Load from a bundled cblite (in AppDelegate change #define nobundled to bundled)
 3. couchapp push to the running server
 
-We'll try the couchapp push. Change to the Tangerine-community/app directory. You'll need to
+# couchapp push
+
+Change to the Tangerine-community/app directory. You'll need to
 create a .couchapprc file:
 
     {
@@ -65,4 +67,48 @@ If you want to see what is happening you can change CBLHTTPResponse.m to EnableL
     EnableLog(YES);
     EnableLogTo(CBLListenerVerbose, YES);
 
+You'll notice that you see a lot of logging for the many attachments (scripts/images/css) and generally
+you will see a final:
 
+    01:20:13.850‖ CBLListenerVerbose: Response[GET /tangerine/_design/tangerine/images/corner_logo.png] sending nil bytes
+
+The file may vary but you will see a "sending nil bytes".
+
+# replicate
+
+In order to try the replication option you'll need to have a local couchdb running. You'll also need a user
+added to Futon with the credentials admin/password (or you can change the references in the code to a real
+user).
+
+Change the port in your .couchapprc file in Tangerine/Tangerine-community/app/.couchapprc so it points
+to your local couch db (5984 by default):
+
+    {
+      "env" : {
+        "default" : {
+          "db" : "http://admin:password@localhost:5984/tangerine"
+        }
+      }
+    }
+
+From this point you should be able to push (from the app folder)
+
+    $ /usr/local/share/python/couchapp push
+    2013-09-26 00:58:21 [INFO] Visit your CouchApp here:
+    http://localhost:5984/tangerine/_design/tangerine/index.html
+
+On your simulator, make sure you have exited the app (Shift+Cmd+H is the Home Button), and delete it (click and hold
+the Tangerine icon until you see the (x) and delete it.
+
+In AppDelegate.m change the #define at the top:
+
+    #define replicate 1
+
+This makes it so that the app will replicate on load. Run the app. The replication should be very fast. Once the
+logs show that it is loaded, click the Start button. You should see the login screen and should be able to
+log in using admin/password (note: the user name is case sensitive and the username box tries to autocapitalize
+Admin).
+
+Turn replication off in AppDelegate.m
+
+    #define noreplicate 1
