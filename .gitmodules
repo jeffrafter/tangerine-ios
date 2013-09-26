@@ -1,3 +1,6 @@
 [submodule "couchbase-lite-ios"]
 	path = couchbase-lite-ios
 	url = https://github.com/jeffrafter/couchbase-lite-ios.git
+[submodule "Tangerine-community"]
+	path = Tangerine-community
+	url = https://github.com/jeffrafter/Tangerine.git
