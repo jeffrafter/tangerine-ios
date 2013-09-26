@@ -13,6 +13,7 @@
 #import "CBLJSViewCompiler.h"
 
 #define noreplicate 1
+#define nobundled 1
 
 @interface AppDelegate()
 
@@ -28,29 +29,19 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
-    CBLManager* server = [CBLManager sharedInstance];
-    NSError* error;
-    self.database = [server createDatabaseNamed: @"tangerine" error: &error];
-
-    [CBLView setCompiler: [[CBLJSViewCompiler alloc] init]];
-
     self.rvc = [[RootViewController alloc] init];
     [[self window] setRootViewController:self.rvc];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-
-#ifdef replicate
-    NSURL *db = [NSURL URLWithString:@"http://admin:password@192.168.0.14:5984/tangerine"];
-    NSArray* repls = [self.database replicateWithURL: db exclusively: YES];
-    self.pull = [repls objectAtIndex: 0];
-    self.push = [repls objectAtIndex: 1];
-
-    [self.pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
-    [self.push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
-#endif
     
-    // For some reason the observe methods are not being called, so do this manually
-    [self syncComplete];
+    [CBLView setCompiler: [[CBLJSViewCompiler alloc] init]];
+
+    CBLManager* server = [CBLManager sharedInstance];
+    NSError* error;
+    self.database = [server databaseNamed: @"tangerine" error: &error];
+    
+    [self preload];
+    [self.rvc databaseDidLoad];
     
     return YES;
 }
@@ -86,6 +77,37 @@
     }
 }
 
+- (void)preload
+{
+#ifdef bundled
+    if (!self.database) {
+        NSString* bundledDbPath = [[NSBundle mainBundle] pathForResource: @"tangerine" ofType: @"cblite"];
+        NSString* bundledAttPath = [[NSBundle mainBundle] pathForResource: @"tangerine attachments" ofType: @""];
+        
+        BOOL ok = [server replaceDatabaseNamed: @"tangerine"
+                              withDatabaseFile: bundledDbPath
+                               withAttachments: bundledAttPath
+                                         error: &error];
+        
+        NSAssert(ok, @"Failed to install database: %@", error);
+        
+        self.database = [server databaseNamed: @"tangerine" error: &error];
+        
+        NSAssert(self.database, @"Failed to open database");
+    }
+#endif
+    
+#ifdef replicate
+    NSURL *db = [NSURL URLWithString:@"http://admin:password@localhost:5984/tangerine"];
+    NSArray* repls = [self.database replicateWithURL: db exclusively: YES];
+    self.pull = [repls objectAtIndex: 0];
+    self.push = [repls objectAtIndex: 1];
+    
+    [self.pull addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+    [self.push addObserver: self forKeyPath: @"completed" options: 0 context: NULL];
+#endif
+}
+
 - (void)syncComplete
 {
     [self.rvc databaseDidLoad];
@@ -109,6 +131,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+    CBLManager* server = [CBLManager sharedInstance];
+    [server close];
 }
 
 @end

@@ -30,9 +30,9 @@
     [super viewDidLoad];
 
     CBLManager* manager = [CBLManager sharedInstance];
-    self.listener = [[CBLListener alloc] initWithManager: manager port: 0];
+    self.listener = [[CBLListener alloc] initWithManager: manager port: 59841];
     self.listener.authSecret = [self getAuthSecret];
-    self.listener.passwords = @{@"admin": @"password"};
+    self.listener.passwords = @{@"admin": @"password"};    
     self.listener.requiresAuth = NO;
     self.listener.readOnly = NO;
     NSError* error;
@@ -42,7 +42,6 @@
             NSLog(@"%@", error.localizedDescription);
             return;
         }
-        NSLog(@"%@", manager.internalURL);
 
         self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         self.webView.delegate = self;
@@ -54,6 +53,7 @@
 {
     NSLog(@"Database loaded");
     _databaseLoaded = YES;
+    
     [self loadApp];
 }
 
@@ -68,6 +68,7 @@
     
     NSLog(@"View loaded");
     _viewLoaded = YES;
+    
     [self loadApp];
 }
 
@@ -103,8 +104,8 @@
 
 - (void)loadRequest
 {
-    NSString *domain = @"http://127.0.0.1";
-    NSString *path = @"/tangerine/_design/tangerine/index.html";
+    NSString *domain = @"http://0.0.0.0";
+    NSString *path = @"/tangerine/_design/tangerine/index.html#login";
     NSString *url = [NSString stringWithFormat:@"%@:%i%@", domain, self.listener.port, path];
     NSLog(@"Listening on %@", url);
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
@@ -125,7 +126,7 @@
     if (!authSecret || [authSecret isEqualToString:@""])
     {
         // TODO: Do something way more fancy here
-        authSecret = @"7801cb63b2bf0cd09ce7d313a34f7f9d";
+        authSecret = @"7801cb63b2bf0cd6653bf9afedf7f9d";
 
         [self.keychain setObject:authSecret forKey:(__bridge id)kSecValueData];
     }
