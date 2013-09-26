@@ -36,9 +36,9 @@ All you should see is a white screen with a Start button. If you click that now,
 see a 404 and then need to restart the app. At this point you'll want to setup the
 couchapp. There are three strategies for this:
 
-#) Replicate from a local or remote couchdb (in AppDelegate change #define noreplicate to replicate)
-#) Load from a bundled cblite (in AppDelegate change #define nobundled to bundled)
-#) couchapp push to the running server
+1. Replicate from a local or remote couchdb (in AppDelegate change #define noreplicate to replicate)
+2. Load from a bundled cblite (in AppDelegate change #define nobundled to bundled)
+3. couchapp push to the running server
 
 We'll try the couchapp push. Change to the Tangerine-community/app directory. You'll need to
 create a .couchapprc file:
