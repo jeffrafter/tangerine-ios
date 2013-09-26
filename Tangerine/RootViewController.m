@@ -30,7 +30,7 @@
     [super viewDidLoad];
 
     CBLManager* manager = [CBLManager sharedInstance];
-    self.listener = [[CBLListener alloc] initWithManager: manager port: 59841];
+    self.listener = [[CBLListener alloc] initWithManager: manager port: 59840];
     self.listener.authSecret = [self getAuthSecret];
     self.listener.passwords = @{@"admin": @"password"};    
     self.listener.requiresAuth = NO;
@@ -42,7 +42,9 @@
             NSLog(@"%@", error.localizedDescription);
             return;
         }
-
+    
+        NSLog(@"Listening on %@", [self url]);
+        
         self.webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         self.webView.delegate = self;
         [self.view addSubview:self.webView];
@@ -83,15 +85,13 @@
     if (_appLoaded || !_databaseLoaded || !_viewLoaded) return;
     _appLoaded = YES;
     
-/*    [NSTimer scheduledTimerWithTimeInterval:5
-                                     target:self
-                                   selector:@selector(loadRequest)
-                                   userInfo:nil
-                                    repeats:NO]; */
-    
+    // Although having this button is very silly, it allows us to
+    // wait as long as needed and not rely on the progress if we are syncing.
+    // Also, it allows you to attach a Safari Developer inspector before
+    // launching the HTML views
     UIButton *button=[UIButton buttonWithType:UIButtonTypeRoundedRect];
     button.frame= CGRectMake(15, 15, 100, 40);
-    [button setTitle:@"Load" forState:UIControlStateNormal];
+    [button setTitle:@"Start" forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
 }
@@ -102,13 +102,16 @@
     ((UIButton *)sender).hidden = YES;
 }
 
+- (NSString *)url
+{
+    NSString *domain = @"http://localhost";
+    NSString *path = @"/tangerine/_design/tangerine/index.html#login";
+    return [NSString stringWithFormat:@"%@:%i%@", domain, self.listener.port, path];
+}
+
 - (void)loadRequest
 {
-    NSString *domain = @"http://0.0.0.0";
-    NSString *path = @"/tangerine/_design/tangerine/index.html#login";
-    NSString *url = [NSString stringWithFormat:@"%@:%i%@", domain, self.listener.port, path];
-    NSLog(@"Listening on %@", url);
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self url]]]];
 }
 
 /** The authSecret can be stored anywhere (including directly in the code) but if you want to generate a per device
